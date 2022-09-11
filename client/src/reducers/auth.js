@@ -1,4 +1,4 @@
-import { REGISTER_SUCCESS, REGISTER_FAILURE, AUTH_ERROR, USER_LOADED } from "../actions/types"
+import { REGISTER_SUCCESS, REGISTER_FAILURE, AUTH_ERROR, USER_LOADED, LOGIN_FAILURE, LOGIN_SUCCESS, LOGOUT } from "../actions/types"
 
 
 const intialState = {
@@ -18,6 +18,7 @@ const auth = (state=intialState,action) =>{
                 user:payload
             })
         case REGISTER_SUCCESS:
+        case LOGIN_SUCCESS:
             localStorage.setItem('token',payload.token);
             return ({
                 ...state,
@@ -26,7 +27,9 @@ const auth = (state=intialState,action) =>{
                 loading: false
             })
         case REGISTER_FAILURE:
+        case LOGIN_FAILURE:
         case AUTH_ERROR:
+        case LOGOUT:
             localStorage.removeItem('token');
             return {
                 ...state,

@@ -1,12 +1,12 @@
 import React, { Fragment, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { setAlert } from '../../actions/alert';
 import { PropTypes } from 'prop-types';
 
 import { register } from '../../actions/auth';
 
-function Register({setAlert,register}) {
+function Register({setAlert,register,isAuthenticated}) {
     const [formData, setformData] = useState({
         name: '',
         email: '',
@@ -25,6 +25,10 @@ function Register({setAlert,register}) {
             console.log("Passwords matched Registration underprogess");
         }
     }
+    if(isAuthenticated){
+        return <Navigate to ='/dashboard' />
+    }
+
     return (
         <Fragment>
             {/* <nav className="navbar bg-dark">
@@ -90,7 +94,11 @@ function Register({setAlert,register}) {
 
 Register.protoType = {
     setAlert: PropTypes.func.isRequired,
-    register: PropTypes.func.isRequired
+    register: PropTypes.func.isRequired,
+    isAuthenticated: PropTypes.bool.isRequired
 }
+const mapStateToProps = state => ({
+    isAuthenticated: state.auth.isAuthenticated
+})
 
 export default connect(null,{setAlert,register})(Register);
