@@ -1,7 +1,10 @@
 import React, { Fragment, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { setAlert } from '../../actions/alert';
+import { PropTypes } from 'prop-types';
 
-function Register(props) {
+function Register({setAlert}) {
     const [formData, setformData] = useState({
         name: '',
         email: '',
@@ -13,7 +16,7 @@ function Register(props) {
     const SubmitHandler = (e) => {
         e.preventDefault();
         if(password !== password2){
-            console.log("Passwords didn't match");
+            setAlert('Passwords did not match','danger');
         }
         else{
             console.log("Passwords matched Registration underprogess");
@@ -21,7 +24,7 @@ function Register(props) {
     }
     return (
         <Fragment>
-            <nav className="navbar bg-dark">
+            {/* <nav className="navbar bg-dark">
             <h1>
                 <Link to="/"><i className="fas fa-code"></i> DevConnector</Link>
             </h1>
@@ -30,7 +33,7 @@ function Register(props) {
                 <li><Link to="/register">Register</Link></li>
                 <li><Link to="/login">Login</Link></li>
             </ul>
-            </nav>
+            </nav> */}
             <section className="container">
             <h1 className="large text-primary">Sign Up</h1>
             <p className="lead"><i className="fas fa-user"></i> Create Your Account</p>
@@ -82,4 +85,8 @@ function Register(props) {
     );
 }
 
-export default Register;
+Register.protoType = {
+    setAlert: PropTypes.func.isRequired
+}
+
+export default connect(null,{setAlert})(Register);
