@@ -120,7 +120,6 @@ router.put('/experience',[auth, [
     check('from','From is required').not().isEmpty()
 ]
 ], async function (req, res){
-    console.log(req);
     const errors = validationResult(req);
     if(!errors.isEmpty()){
         return res.status(400).json({errors : errors.array()});
